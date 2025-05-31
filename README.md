@@ -124,3 +124,14 @@ mongoimport --uri "your_mongodb_atlas_connection_string" \
 
 6. **Deploy Web Application**
    Deploy the web application from the source code located in the **`web`** folder.
+
+### Summary
+
+This project demonstrates a scalable and extensible recommendation system for e-commerce, leveraging Apache Spark on GCP for large-scale data processing, combined with real-time feature serving via MongoDB Atlas, and a web interface for user interaction.
+
+### Team Members
+
+- Lưu Khải Hưng - 22028288
+- Nguyễn Đức Hiển - 22028178
+- Tạ Hải An - 22028242
+- Dương Hoàng Khánh - 19021312
