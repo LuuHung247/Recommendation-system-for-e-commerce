@@ -76,3 +76,51 @@ You can use the GCP Console or run the following in Cloud Shell:
 bq --location=asia-southeast1 mk --dataset bigdataproject-456014:team15_dataset
 
 ```
+
+## Runing code
+
+To run the recommendation system pipeline, follow these steps inside the Dataproc Jupyter environment:
+
+1. **Access Jupyter Notebook**  
+   Open the Jupyter Notebook or JupyterLab via the Dataproc Component Gateway in your GCP Console:  
+   `Dataproc` → Select your cluster (e.g., `team15-cluster`) → `Web Interfaces` → `Jupyter`.
+
+2. **Run Notebooks in Order**  
+   Execute the following notebooks step-by-step in this sequence:
+
+   - First, run all notebooks inside the **`data-ingestion`** folder to perform data ingestion and preprocessing.
+   - Then, run the collaborative filtering models by executing notebooks inside the folders:
+     - **`user-based`**
+     - **`item-based`**
+   - Finally, run the notebook inside the **`content-based`** folder for content-based filtering.
+
+3. **Save Artifacts**  
+   Store intermediate data, models, and outputs in your configured Google Cloud Storage bucket, e.g.,  
+   `gs://team15-bucket/`.
+4. **Deploy Results to BigQuery**  
+   Load the final recommendation outputs into your BigQuery dataset for querying and analysis.  
+   This can be done via the BigQuery UI, or with commands like:
+
+   ```bash
+   bq load --source_format=PARQUET \
+     bigdataproject-456014:team15_dataset.recommendations \
+     gs://team15-bucket/output/*parquet
+   ```
+
+5. **Import Data to MongoDB Atlas**
+
+Import relevant datasets or recommendation results into your MongoDB Atlas cluster for real-time lookups and feature serving.
+
+You can use MongoDB tools such as `mongoimport` or implement your own application logic to synchronize data with the cluster.
+
+Example using `mongoimport`:
+
+```bash
+mongoimport --uri "your_mongodb_atlas_connection_string" \
+  --collection recommendations \
+  --file /path/to/recommendations.json \
+  --jsonArray
+```
+
+6. **Deploy Web Application**
+   Deploy the web application from the source code located in the **`web`** folder.
